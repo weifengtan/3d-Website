@@ -18,8 +18,9 @@ camera.position.setZ(30);
 
 renderer.render( scene, camera ); 
 
+const waveTexture = new THREE.TextureLoader().load('waves.jpg')
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100 )
-const material = new  THREE.MeshStandardMaterial({color: 0xff6347});
+const material = new  THREE.MeshStandardMaterial({map: waveTexture});
 const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus)
@@ -39,7 +40,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
   const geometry = new THREE.SphereGeometry(0.25,24,24);
-  const material = new THREE.MeshStandardMaterial({color: 0xffffff});
+  const material = new THREE.MeshStandardMaterial({color: 0xffff});
   const star = new THREE.Mesh( geometry, material); 
 
   const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
@@ -49,6 +50,50 @@ function addStar() {
 }
 
 Array(200).fill().forEach(addStar);
+
+const spaceTexture = new THREE.TextureLoader().load('ivana-cajina-asuyh-_ZX54-unsplash.jpg');
+scene.background = spaceTexture; 
+
+const jeffTexture = new THREE.TextureLoader().load('james-day-5YWf-5hyZcw-unsplash.jpg');
+
+const jeff = new THREE.Mesh(
+  new THREE.SphereGeometry(5,60,60),
+  new THREE.MeshBasicMaterial({map: jeffTexture})
+);
+
+scene.add(jeff); 
+jeff.position.set(30,0,30);
+
+const moonTexture = new THREE.TextureLoader().load('waves.jpg');
+const wrinkleTexture = new THREE.TextureLoader().load('NormalMap.jpg'); 
+const moonShape = new THREE.SphereGeometry(5, 60, 60); 
+const moonMesh = new THREE.Mesh(
+  moonShape, 
+  new THREE.MeshStandardMaterial({
+    map: (moonTexture),
+    normalMap: (wrinkleTexture)})
+);
+scene.add(moonMesh);
+moonMesh.position.z = 30; 
+moonMesh.position.setX(-10); 
+
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+  moonMesh.rotation.x += 1;
+  moonMesh.rotation.y += 1; 
+  moonMesh.rotation.z += 0.1;
+  moonMesh.position.z += 1;  
+
+  jeff.rotation.y += 0.01;
+  jeff.rotation.z += 0.01; 
+
+  camera.position.y = t * -1;
+  camera.position.x = t * -1; 
+  camera.position.z = t * -1; 
+  
+}
+
+document.body.onscroll = moveCamera
 
 function animate() {
   requestAnimationFrame( animate ); 
@@ -65,3 +110,4 @@ function animate() {
 }
 
 animate()
+

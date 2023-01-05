@@ -3,3 +3,34 @@ canvas {
   top: 0; 
   left: 0; 
 }
+
+main {
+  position: absolute;
+  width: 100vw; 
+  color:white; 
+  z-index: 99;
+  position: absolute; 
+  width: 100%;
+  margin: 0px auto; 
+  padding: 120px 0px; 
+
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+}
+
+header {
+  background-color: var(--dark-bg);
+  grid-column: 2 / span 5; 
+  font-size: 2.5rem;
+  padding: 2rem; 
+  margin-bottom: var(--spacing); 
+}
+
+section {
+  grid-column: 2 / 8;
+  padding: 1rem; 
+  background: var(--dark-bg);
+  font-size: 1.5;
+  margin-bottom: var(--spacing); 
+}
+
